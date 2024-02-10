@@ -2,6 +2,10 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
 SECRET_KEY = (
     "django-insecure-mdl_9#16zvu#$%y2xugjk_g5y2iz3y-gbsiw7su2na&(e58gx$"
 )

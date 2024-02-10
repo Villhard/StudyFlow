@@ -1,0 +1,17 @@
+<a href="{{ card.id }}" class="text-decoration-none">
+<div
+    class="card mb-3 shadow text-center
+    {% if card.knowledge_level == 0 %}
+    border-danger
+    {% elif card.knowledge_level == 1 %}
+    border-warning
+    {% elif card.knowledge_level == 2 %}
+    border-success
+    {% endif %}">
+  <div class="card-body">
+    <p class="card-text">{{ card.front_side }}</p>
+    <hr>
+    <p class="card-text">{{ card.back_side }}</p>
+  </div>
+</div>
+</a>
