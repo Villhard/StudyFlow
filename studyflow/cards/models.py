@@ -11,7 +11,7 @@ class Card(models.Model):
     next_time = models.DateTimeField(default=timezone.now)
     knowledge_level = models.PositiveSmallIntegerField(default=0)
     set = models.ForeignKey(
-        "cards.Set", on_delete=models.CASCADE, related_name="cards"
+        "cards.Deck", on_delete=models.CASCADE, related_name="cards"
     )
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="cards"
@@ -25,10 +25,10 @@ class Card(models.Model):
         )
 
 
-class Set(models.Model):
+class Deck(models.Model):
     name = models.CharField(max_length=255)
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="sets"
+        User, on_delete=models.CASCADE, related_name="decks"
     )
 
     def __str__(self):
