@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  {% for card in cards %}
+    <div>
+      <p>{{ card.front_side }}</p>
+      <p>{{ card.back_side }}</p>
+    </div>
+  {% endfor %}
+
+{% endblock %}
