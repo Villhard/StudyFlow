@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="row">
+    {% for deck in decks %}
+      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+        {% include "includes/deck.html" with deck=deck %}
+      </div>
+    {% empty %}
+      <p class="text-center">No decks yet.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

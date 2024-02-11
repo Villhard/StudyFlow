@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <div class="card border-primary shadow">
+        <div class="card-body">
+          <p class="card-text">{{ card.front_side }}</p>
+      </div>
+    </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-danger shadow">
+        <div class="card-body">
+          <p class="card-text">{{ card.back_side }}</p>
+      </div>
+    </div>
+  </div>
+{% endblock %}
