@@ -10,6 +10,10 @@ class CardAPIView(generics.ListCreateAPIView):
     serializer_class = CardSerializer
 
 
+def index(request):
+    return render(request, "index.html")
+
+
 def view_decks(request):
     context = {"decks": Deck.objects.all()}
     return render(request, "cards/decks.html", context)

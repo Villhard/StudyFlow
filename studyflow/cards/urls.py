@@ -1,8 +1,9 @@
 from django.urls import path
 
-from .views import CardAPIView, view_card, view_cards, view_decks
+from .views import CardAPIView, index, view_card, view_cards, view_decks
 
 urlpatterns = [
+    path("", index, name="home"),
     path("decks/", view_decks, name="decks"),
     path("decks/<int:deck_id>/", view_cards, name="cards"),
     path("decks/<int:deck_id>/<int:card_id>/", view_card, name="card"),
