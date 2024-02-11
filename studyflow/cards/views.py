@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from rest_framework import generics
 
 from .models import Card, Deck
@@ -16,10 +16,12 @@ def view_decks(request):
 
 
 def view_cards(request, deck_id):
-    context = {"cards": Card.objects.filter(deck=deck_id)}
+    deck = get_object_or_404(Deck, id=deck_id)
+    context = {"cards": deck.cards.all()}
     return render(request, "cards/cards.html", context)
 
 
 def view_card(request, deck_id, card_id):
-    context = {"card": Card.objects.get(id=card_id)}
+    card = get_object_or_404(Card, id=card_id)
+    context = {"card": card}
     return render(request, "cards/card.html", context)
