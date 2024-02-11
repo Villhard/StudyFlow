@@ -10,7 +10,7 @@ class Card(models.Model):
     back_side = models.TextField()
     next_time = models.DateTimeField(default=timezone.now)
     knowledge_level = models.PositiveSmallIntegerField(default=0)
-    set = models.ForeignKey(
+    deck = models.ForeignKey(
         "cards.Deck", on_delete=models.CASCADE, related_name="cards"
     )
     user = models.ForeignKey(
