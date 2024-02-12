@@ -1,13 +1,9 @@
 from django.shortcuts import get_object_or_404, render
 from rest_framework import generics
 
+from .forms import AddCardForm, AddDeckForm
 from .models import Card, Deck
 from .serializers import CardSerializer
-
-
-class CardAPIView(generics.ListCreateAPIView):
-    queryset = Card.objects.all()
-    serializer_class = CardSerializer
 
 
 def index(request):
@@ -17,6 +13,11 @@ def index(request):
 def view_decks(request):
     context = {"decks": Deck.objects.all()}
     return render(request, "cards/decks.html", context)
+
+
+def add_deck(request):
+    context = {"form": AddDeckForm()}
+    return render(request, "cards/add_page.html", context)
 
 
 def view_cards(request, deck_id):
@@ -29,3 +30,14 @@ def view_card(request, deck_id, card_id):
     card = get_object_or_404(Card, id=card_id)
     context = {"card": card}
     return render(request, "cards/card.html", context)
+
+
+def add_card(request):
+    context = {"form": AddCardForm()}
+    return render(request, "cards/add_page.html", context)
+
+
+# API
+class CardAPIView(generics.ListCreateAPIView):
+    queryset = Card.objects.all()
+    serializer_class = CardSerializer

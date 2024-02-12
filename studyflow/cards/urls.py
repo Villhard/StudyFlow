@@ -1,15 +1,17 @@
 from django.urls import path
 
-from .views import CardAPIView, index, view_card, view_cards, view_decks
+from . import views
 
 urlpatterns = [
-    path("", index, name="home"),
-    path("decks/", view_decks, name="decks"),
-    path("decks/<int:deck_id>/", view_cards, name="cards"),
-    path("decks/<int:deck_id>/<int:card_id>/", view_card, name="card"),
+    path("", views.index, name="home"),
+    path("decks/", views.view_decks, name="decks"),
+    path("decks/<int:deck_id>/", views.view_cards, name="cards"),
+    path("decks/add_deck/", views.add_deck, name="add_deck"),
+    path("decks/<int:deck_id>/<int:card_id>/", views.view_card, name="card"),
+    path("decks/add_card", views.add_card, name="add_card"),
 ]
 
 # API
 urlpatterns += [
-    path("api/v1/cards/", CardAPIView.as_view(), name="api-v1-cards"),
+    path("api/v1/cards/", views.CardAPIView.as_view(), name="api-v1-cards"),
 ]
