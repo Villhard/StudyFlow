@@ -7,7 +7,7 @@ urlpatterns = [
     path("decks/", views.view_decks, name="decks"),
     path("decks/<int:deck_id>/", views.view_cards, name="cards"),
     path("decks/add_deck/", views.add_deck, name="add_deck"),
-    path("decks/<int:deck_id>/<int:card_id>/", views.view_card, name="card"),
+    path("decks/<int:_>/<int:card_id>/", views.view_card, name="card"),
     path("decks/add_card", views.add_card, name="add_card"),
 ]
 

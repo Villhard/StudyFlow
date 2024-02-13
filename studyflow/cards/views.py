@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from rest_framework import generics
 
 from .forms import AddCardForm, AddDeckForm
@@ -16,6 +16,12 @@ def view_decks(request):
 
 
 def add_deck(request):
+    if request.method == "POST":
+        form = AddDeckForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("decks")
+
     context = {"form": AddDeckForm()}
     return render(request, "cards/add_page.html", context)
 
@@ -26,13 +32,18 @@ def view_cards(request, deck_id):
     return render(request, "cards/cards.html", context)
 
 
-def view_card(request, deck_id, card_id):
+def view_card(request, _, card_id):
     card = get_object_or_404(Card, id=card_id)
     context = {"card": card}
     return render(request, "cards/card.html", context)
 
 
 def add_card(request):
+    if request.method == "POST":
+        form = AddCardForm(request.POST)
+        if form.is_valid():
+            form.save()
+
     context = {"form": AddCardForm()}
     return render(request, "cards/add_page.html", context)
 
