@@ -4,11 +4,9 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="home"),
-    path("decks/", views.view_decks, name="decks"),
-    path("decks/<int:deck_id>/", views.view_cards, name="cards"),
-    path("decks/add_deck/", views.add_deck, name="add_deck"),
-    path("decks/<int:_>/<int:card_id>/", views.view_card, name="card"),
-    path("decks/add_card", views.add_card, name="add_card"),
+    path("cards/", views.view_cards, name="cards"),
+    path("cards/<int:card_id>", views.view_card, name="card"),
+    path("cards/add_card/", views.add_card, name="add-card"),
 ]
 
 # API

@@ -10,9 +10,6 @@ class Card(models.Model):
     back_side = models.TextField()
     next_time = models.DateTimeField(default=timezone.now)
     knowledge_level = models.PositiveSmallIntegerField(default=0)
-    deck = models.ForeignKey(
-        "cards.Deck", on_delete=models.CASCADE, related_name="cards"
-    )
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="cards"
     )
@@ -23,13 +20,3 @@ class Card(models.Model):
             if len(self.front_side) < 20
             else f"{self.front_side[:20]}..."
         )
-
-
-class Deck(models.Model):
-    name = models.CharField(max_length=255)
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="decks"
-    )
-
-    def __str__(self):
-        return self.name
