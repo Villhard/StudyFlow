@@ -23,12 +23,13 @@ def view_card(request, card_id):
 
 
 def add_card(request):
+    form = AddCardForm()
     if request.method == "POST":
         form = AddCardForm(request.POST)
         if form.is_valid():
             form.save()
 
-    context = {"form": AddCardForm()}
+    context = {"form": form}
     return render(request, "cards/add_card.html", context)
 
 
