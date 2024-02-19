@@ -1,20 +1,41 @@
 {% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block title %}
+  {% if request.path == '/card/' %}
+    Add card
+  {% else %}
+    Edit card
+  {% endif %}
+{% endblock %}
 
 {% block content %}
-  <div class="row mb-3">
-    <div class="col-md-6">
-      <div class="card border-primary shadow">
-        <div class="card-body">
-          <p class="card-text">{{ card.front_side }}</p>
-        </div>
-      </div>
+  
+  <div class="card col-xl-3 col-lg-4 col-md-6 col-sm-12">
+    <div class="card-header">
+      <h5 class="card-title">
+        {% if request.path == '/card/' %}
+          Add card
+        {% else %}
+          Edit card
+        {% endif %}
+      </h5>
     </div>
-    <div class="col-md-6">
-      <div class="card border-danger shadow">
-        <div class="card-body">
-          <p class="card-text">{{ card.back_side }}</p>
-        </div>
+    {% if form.is_valid %}
+      <div class="alert alert-success" role="alert">
+        Card added successfully
       </div>
+    {% endif %}
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% if request.path == '/card/' %}
+          {% bootstrap_button button_type="submit" content="Add" %}
+        {% else %}
+          {% bootstrap_button button_type="submit" content="Edit" %}
+        {% endif %}
+      </form>
     </div>
   </div>
 {% endblock %}

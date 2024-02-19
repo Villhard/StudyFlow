@@ -10,26 +10,28 @@ def index(request):
     return render(request, "index.html")
 
 
-def view_cards(request):
+def cards(request):
     cards = Card.objects.all()
     context = {"cards": cards}
     return render(request, "cards/cards.html", context)
 
 
-def view_card(request, card_id):
-    card = get_object_or_404(Card, id=card_id)
-    context = {"card": card}
-    return render(request, "cards/card.html", context)
+def card(request, pk=None):
+    if pk:
+        instance = get_object_or_404(Card, id=pk)
+    else:
+        instance = None
 
-
-def add_card(request):
-    form = CardForm()
+    form = CardForm(request.POST or None, instance=instance)
     context = {"form": form}
-    if request.method == "POST":
-        form = CardForm(request.POST)
-        if form.is_valid():
-            context.update({"form": form})
-    return render(request, "cards/add_card.html", context)
+
+    if request.method == "POST" and form.is_valid():
+        card = form.save(commit=False)
+        card.user = request.user
+        card.save()
+        context.update({"form": form})
+
+    return render(request, "cards/card.html", context)
 
 
 # API

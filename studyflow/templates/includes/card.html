@@ -1,4 +1,4 @@
-<a href="{{ card.id }}" class="text-decoration-none text-dark">
+<a href="{% url 'edit-card' card.id %}" class="text-decoration-none text-dark">
 <div
     class="card mb-3 shadow text-center
     {% if card.knowledge_level == 0 %}
