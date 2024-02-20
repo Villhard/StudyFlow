@@ -2,10 +2,12 @@
 {% load django_bootstrap5 %}
 
 {% block title %}
-  {% if request.path == '/card/' %}
-    Add card
-  {% else %}
+  {% if "/edit/" in request.path %}
     Edit card
+  {% elif "/delete/" in request.path %}
+    Delete card
+  {% else %}
+    Add card
   {% endif %}
 {% endblock %}
 
@@ -14,10 +16,12 @@
   <div class="card col-xl-3 col-lg-4 col-md-6 col-sm-12">
     <div class="card-header">
       <h5 class="card-title">
-        {% if request.path == '/card/' %}
-          Add card
-        {% else %}
+        {% if "/edit/" in request.path %}
           Edit card
+        {% elif "/delete/" in request.path %}
+          Delete card
+        {% else %}
+          Add card
         {% endif %}
       </h5>
     </div>
@@ -26,16 +30,29 @@
         Card added successfully
       </div>
     {% endif %}
-    <div class="card-body">
-      <form method="post">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        {% if request.path == '/card/' %}
-          {% bootstrap_button button_type="submit" content="Add" %}
-        {% else %}
-          {% bootstrap_button button_type="submit" content="Edit" %}
-        {% endif %}
-      </form>
-    </div>
+    {% with data=form.instance %}
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+          
+          {% if "/delete/" in request.path %}
+            <p>Are you sure you want to delete this card?</p>
+            <h5 class="text-center">{{ data.front_side }}</h5>
+            <hr>
+            <h5 class="text-center">{{ data.back_side }}</h5>
+          {% else %}
+            {% bootstrap_form form %}
+          {% endif %}
+          
+          {% if "/edit/" in request.path %}
+            {% bootstrap_button button_type="submit" content="Edit" %}
+          {% elif "/delete/" in request.path %}
+            {% bootstrap_button button_type="submit" content="Delete" button_class="btn-danger" %}
+          {% else %}
+            {% bootstrap_button button_type="submit" content="Add" %}
+          {% endif %}
+        </form>
+      </div>
+    {% endwith %}
   </div>
 {% endblock %}

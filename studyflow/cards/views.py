@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from rest_framework import generics
 
 from .forms import CardForm
@@ -21,16 +21,22 @@ def card(request, pk=None):
         instance = get_object_or_404(Card, id=pk)
     else:
         instance = None
-
     form = CardForm(request.POST or None, instance=instance)
     context = {"form": form}
-
-    if request.method == "POST" and form.is_valid():
+    if form.is_valid():
         card = form.save(commit=False)
         card.user = request.user
         card.save()
-        context.update({"form": form})
+    return render(request, "cards/card.html", context)
 
+
+def card_delete(request, pk):
+    instance = get_object_or_404(Card, id=pk)
+    form = CardForm(instance=instance)
+    context = {"form": form}
+    if request.method == "POST":
+        instance.delete()
+        return redirect("cards")
     return render(request, "cards/card.html", context)
 
 

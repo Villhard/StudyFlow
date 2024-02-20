@@ -1,6 +1,7 @@
-<a href="{% url 'edit-card' card.id %}" class="text-decoration-none text-dark">
-<div
-    class="card mb-3 shadow text-center
+{% load django_bootstrap5 %}
+<a href="{% url 'edit' card.id %}" class="text-decoration-none text-dark">
+  <div
+      class="card mb-3 shadow text-center
     {% if card.knowledge_level == 0 %}
     border-danger
     {% elif card.knowledge_level == 1 %}
@@ -30,10 +31,12 @@
     {% elif card.knowledge_level == 13 %}
     border-primary
     {% endif %}">
-  <div class="card-body">
-    <p class="card-text">{{ card.front_side }}</p>
-    <hr>
-    <p class="card-text">{{ card.back_side }}</p>
+    <div class="card-body">
+      <p class="card-text">{{ card.front_side }}</p>
+      <hr>
+      <p class="card-text">{{ card.back_side }}</p>
+      <hr>
+      <a href="{% url 'delete' card.id %}" class="btn btn-danger">Delete</a>
+    </div>
   </div>
-</div>
 </a>
