@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.generic import CreateView, ListView, UpdateView
 from rest_framework import generics
 
 from .forms import CardForm
@@ -10,24 +11,30 @@ def index(request):
     return render(request, "index.html")
 
 
-def cards(request):
-    cards = Card.objects.all()
-    context = {"cards": cards}
-    return render(request, "cards/cards.html", context)
+class CardListView(ListView):
+    model = Card
+    template_name = "cards/cards.html"
+    context_object_name = "cards"
+    paginate_by = 12
 
 
-def card(request, pk=None):
-    if pk:
-        instance = get_object_or_404(Card, id=pk)
-    else:
-        instance = None
-    form = CardForm(request.POST or None, instance=instance)
-    context = {"form": form}
-    if form.is_valid():
-        card = form.save(commit=False)
-        card.user = request.user
-        card.save()
-    return render(request, "cards/card.html", context)
+class CardMixin:
+    model = Card
+    form_class = CardForm
+    template_name = "cards/card.html"
+    success_url = "/cards/"
+
+
+class CardCreateView(CardMixin, CreateView):
+    pass
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class CardUpdateView(CardMixin, UpdateView):
+    pass
 
 
 def card_delete(request, pk):
