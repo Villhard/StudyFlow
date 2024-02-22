@@ -1,5 +1,5 @@
-from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic import CreateView, ListView, UpdateView
+from django.shortcuts import render
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from rest_framework import generics
 
 from .forms import CardForm
@@ -21,7 +21,6 @@ class CardListView(ListView):
 class CardMixin:
     model = Card
     form_class = CardForm
-    template_name = "cards/card.html"
     success_url = "/cards/"
 
 
@@ -37,14 +36,9 @@ class CardUpdateView(CardMixin, UpdateView):
     pass
 
 
-def card_delete(request, pk):
-    instance = get_object_or_404(Card, id=pk)
-    form = CardForm(instance=instance)
-    context = {"form": form}
-    if request.method == "POST":
-        instance.delete()
-        return redirect("cards")
-    return render(request, "cards/card.html", context)
+class CardDeleteView(DeleteView):
+    model = Card
+    success_url = "/cards/"
 
 
 # API
