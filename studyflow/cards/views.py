@@ -1,10 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
-from rest_framework import generics
 
 from .forms import CardForm
 from .models import Card
-from .serializers import CardSerializer
 
 
 def index(request):
@@ -39,9 +37,3 @@ class CardUpdateView(CardMixin, UpdateView):
 class CardDeleteView(DeleteView):
     model = Card
     success_url = "/cards/"
-
-
-# API
-class CardAPIView(generics.ListCreateAPIView):
-    queryset = Card.objects.all()
-    serializer_class = CardSerializer

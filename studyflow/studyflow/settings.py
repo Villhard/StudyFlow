@@ -8,9 +8,7 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
 ]
 
-SECRET_KEY = (
-    "django-insecure-mdl_9#16zvu#$%y2xugjk_g5y2iz3y-gbsiw7su2na&(e58gx$"
-)
+SECRET_KEY = "django-insecure-mdl_9#16zvu#$%y2xugjk_g5y2iz3y-gbsiw7su2na&(e58gx$"
 
 DEBUG = True
 
@@ -24,7 +22,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_bootstrap5",
-    "rest_framework",
     "users.apps.UsersConfig",
     "cards.apps.CardsConfig",
 ]

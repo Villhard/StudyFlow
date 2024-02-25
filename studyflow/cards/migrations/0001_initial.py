@@ -38,9 +38,7 @@ class Migration(migrations.Migration):
                     "knowledge_level",
                     models.PositiveSmallIntegerField(
                         default=0,
-                        validators=[
-                            django.core.validators.MaxValueValidator(13)
-                        ],
+                        validators=[django.core.validators.MaxValueValidator(13)],
                     ),
                 ),
             ],
